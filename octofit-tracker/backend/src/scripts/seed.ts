@@ -5,8 +5,11 @@ import { Team } from '../models/team.js';
 import { User } from '../models/user.js';
 import { Workout } from '../models/workout.js';
 
+// Seed the octofit_db database with test data
+
 async function seedDatabase() {
   try {
+    console.log('Seed the octofit_db database with test data');
     await connectDatabase();
     await Promise.all([
       User.deleteMany({}),
@@ -61,8 +64,11 @@ async function seedDatabase() {
       },
     ]);
 
+    const activities = await Activity.find({});
+    const leaderboardEntries = await Leaderboard.find({});
+
     console.log(
-      `Database seeding complete: ${users.length} users, ${teams.length} teams, ${workouts.length} workouts`,
+      `Database seeding complete: ${users.length} users, ${teams.length} teams, ${activities.length} activities, ${leaderboardEntries.length} leaderboard entries, ${workouts.length} workouts`,
     );
   } catch (error) {
     console.error('Error seeding database:', error);
