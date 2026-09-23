@@ -1,13 +1,34 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api.js';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState('');
+  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
+    : 'http://localhost:8000/api';
 
   useEffect(() => {
-    fetchCollection('activities').then(setActivities).catch((reason) => setError(reason.message));
-  }, []);
+    fetch(`${apiBaseUrl}/activities/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Unable to load activities (${response.status})`);
+        }
+        return response.json();
+      })
+      .then((payload) => {
+        const nextActivities = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload.results)
+            ? payload.results
+            : Array.isArray(payload.items)
+              ? payload.items
+              : Array.isArray(payload.data)
+                ? payload.data
+                : [];
+        setActivities(nextActivities);
+      })
+      .catch((reason) => setError(reason.message));
+  }, [apiBaseUrl]);
 
   return (
     <section className="resource-section">

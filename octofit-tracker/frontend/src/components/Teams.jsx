@@ -1,13 +1,34 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api.js';
 
 function Teams() {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState('');
+  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
+    : 'http://localhost:8000/api';
 
   useEffect(() => {
-    fetchCollection('teams').then(setTeams).catch((reason) => setError(reason.message));
-  }, []);
+    fetch(`${apiBaseUrl}/teams/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Unable to load teams (${response.status})`);
+        }
+        return response.json();
+      })
+      .then((payload) => {
+        const nextTeams = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload.results)
+            ? payload.results
+            : Array.isArray(payload.items)
+              ? payload.items
+              : Array.isArray(payload.data)
+                ? payload.data
+                : [];
+        setTeams(nextTeams);
+      })
+      .catch((reason) => setError(reason.message));
+  }, [apiBaseUrl]);
 
   return (
     <section className="resource-section">

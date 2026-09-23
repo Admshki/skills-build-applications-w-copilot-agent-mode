@@ -1,13 +1,34 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api.js';
 
 function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
+  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
+    : 'http://localhost:8000/api';
 
   useEffect(() => {
-    fetchCollection('users').then(setUsers).catch((reason) => setError(reason.message));
-  }, []);
+    fetch(`${apiBaseUrl}/users/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Unable to load users (${response.status})`);
+        }
+        return response.json();
+      })
+      .then((payload) => {
+        const nextUsers = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload.results)
+            ? payload.results
+            : Array.isArray(payload.items)
+              ? payload.items
+              : Array.isArray(payload.data)
+                ? payload.data
+                : [];
+        setUsers(nextUsers);
+      })
+      .catch((reason) => setError(reason.message));
+  }, [apiBaseUrl]);
 
   return (
     <section className="resource-section">

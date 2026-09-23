@@ -1,13 +1,34 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api.js';
 
 function Leaderboard() {
   const [entries, setEntries] = useState([]);
   const [error, setError] = useState('');
+  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
+    : 'http://localhost:8000/api';
 
   useEffect(() => {
-    fetchCollection('leaderboard').then(setEntries).catch((reason) => setError(reason.message));
-  }, []);
+    fetch(`${apiBaseUrl}/leaderboard/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Unable to load leaderboard (${response.status})`);
+        }
+        return response.json();
+      })
+      .then((payload) => {
+        const nextEntries = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload.results)
+            ? payload.results
+            : Array.isArray(payload.items)
+              ? payload.items
+              : Array.isArray(payload.data)
+                ? payload.data
+                : [];
+        setEntries(nextEntries);
+      })
+      .catch((reason) => setError(reason.message));
+  }, [apiBaseUrl]);
 
   return (
     <section className="resource-section">
