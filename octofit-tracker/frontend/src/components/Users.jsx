@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
-  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
-    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api';
+  const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users`
+    : 'http://localhost:8000/api/users';
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/users/`)
+    fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Unable to load users (${response.status})`);
@@ -28,7 +28,7 @@ function Users() {
         setUsers(nextUsers);
       })
       .catch((reason) => setError(reason.message));
-  }, [apiBaseUrl]);
+  }, [apiUrl]);
 
   return (
     <section className="resource-section">

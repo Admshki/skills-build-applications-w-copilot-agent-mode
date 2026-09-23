@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 function Leaderboard() {
   const [entries, setEntries] = useState([]);
   const [error, setError] = useState('');
-  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
-    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api';
+  const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard`
+    : 'http://localhost:8000/api/leaderboard';
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/leaderboard/`)
+    fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Unable to load leaderboard (${response.status})`);
@@ -28,7 +28,7 @@ function Leaderboard() {
         setEntries(nextEntries);
       })
       .catch((reason) => setError(reason.message));
-  }, [apiBaseUrl]);
+  }, [apiUrl]);
 
   return (
     <section className="resource-section">

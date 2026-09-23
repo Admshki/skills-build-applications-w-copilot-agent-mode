@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 function Workouts() {
   const [workouts, setWorkouts] = useState([]);
   const [error, setError] = useState('');
-  const apiBaseUrl = import.meta.env.VITE_CODESPACE_NAME
-    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api';
+  const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+    ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts`
+    : 'http://localhost:8000/api/workouts';
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/workouts/`)
+    fetch(apiUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Unable to load workouts (${response.status})`);
@@ -28,7 +28,7 @@ function Workouts() {
         setWorkouts(nextWorkouts);
       })
       .catch((reason) => setError(reason.message));
-  }, [apiBaseUrl]);
+  }, [apiUrl]);
 
   return (
     <section className="resource-section">
