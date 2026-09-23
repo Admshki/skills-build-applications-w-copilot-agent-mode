@@ -1,0 +1,258 @@
+.app-shell {
+  min-height: 100vh;
+  background: #f7f7f2;
+}
+
+.topbar {
+  align-items: center;
+  background: #101b1a;
+  color: #f5f3ea;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+}
+
+.brand {
+  align-items: center;
+  color: inherit;
+  display: inline-flex;
+  font-size: 1.2rem;
+  font-weight: 700;
+  gap: 0.65rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #e36d3d;
+  border-radius: 50%;
+  color: #101b1a;
+  display: inline-flex;
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.api-status {
+  color: #a9b7a9;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-layout {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 1200px;
+  min-height: calc(100vh - 4.5rem);
+}
+
+.sidebar {
+  border-right: 1px solid #d9ddd3;
+  padding: 2.5rem 1.25rem;
+}
+
+.nav-label,
+.eyebrow,
+.card-kicker {
+  color: #c15c34;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 0 0 0.8rem;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  border-left: 3px solid transparent;
+  color: #60706a;
+  display: block;
+  font-size: 0.95rem;
+  margin: 0.25rem 0;
+  padding: 0.65rem 0.8rem;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: #e5ebe0;
+  border-left-color: #e36d3d;
+  color: #101b1a;
+}
+
+.main-content {
+  min-width: 0;
+  padding: clamp(2rem, 6vw, 5rem);
+}
+
+.overview {
+  max-width: 46rem;
+  padding-top: clamp(2rem, 10vh, 7rem);
+}
+
+.overview h1 {
+  color: #101b1a;
+  font-family: Georgia, serif;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  margin: 0 0 1.5rem;
+}
+
+.overview-copy {
+  color: #60706a;
+  font-size: 1.2rem;
+  max-width: 27rem;
+}
+
+.overview-links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.primary-link,
+.quiet-link {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.primary-link {
+  background: #e36d3d;
+  color: #101b1a;
+  padding: 0.8rem 1.1rem;
+}
+
+.quiet-link {
+  color: #c15c34;
+}
+
+.resource-section {
+  max-width: 58rem;
+}
+
+.section-heading {
+  border-bottom: 1px solid #d9ddd3;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.section-heading h2 {
+  color: #101b1a;
+  font-family: Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin: 0;
+}
+
+.resource-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+
+.resource-card {
+  background: #fff;
+  border: 1px solid #d9ddd3;
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.25rem;
+}
+
+.resource-card strong {
+  color: #101b1a;
+  font-size: 1.15rem;
+}
+
+.resource-card > span:last-child,
+.empty-state {
+  color: #60706a;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: #ad3f2b;
+}
+
+.ranking-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ranking-row {
+  align-items: center;
+  border-bottom: 1px solid #d9ddd3;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 3rem 1fr auto;
+  padding: 1rem 0;
+}
+
+.rank-number {
+  color: #c15c34;
+  font-family: Georgia, serif;
+  font-size: 1.8rem;
+}
+
+.ranking-row strong {
+  color: #101b1a;
+}
+
+.ranking-row > span:last-child {
+  color: #60706a;
+}
+
+@media (max-width: 700px) {
+  .api-status {
+    display: none;
+  }
+
+  .app-layout {
+    display: block;
+  }
+
+  .sidebar {
+    border-bottom: 1px solid #d9ddd3;
+    border-right: 0;
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav-link {
+    border-bottom: 3px solid transparent;
+    border-left: 0;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    border-bottom-color: #e36d3d;
+    border-left: 0;
+  }
+
+  .main-content {
+    padding: 2.5rem 1.25rem;
+  }
+}
